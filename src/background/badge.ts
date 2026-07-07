@@ -15,7 +15,7 @@ const BADGE_COLORS: Record<UsageStatus, string> = {
 };
 
 /** Highest percentage across claude/codex session & weekly windows, or null. */
-const maxPercentage = (state: UsageState): number | null => {
+export const maxPercentage = (state: UsageState): number | null => {
   const percentages: number[] = [];
 
   for (const usage of [state.claude, state.codex]) {
