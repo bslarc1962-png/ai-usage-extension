@@ -80,3 +80,64 @@ export const formatRelativeTime = (timestamp: number, now: number): string => {
 
   return msg('timeAgo', `${Math.floor(hours / 24)}${msg('timeDayShort')}`);
 };
+
+export interface Throttled<A extends unknown[]> {
+  (...args: A): void;
+  /** Cancel any pending trailing invocation (call on teardown). */
+  cancel: () => void;
+}
+
+/**
+ * Rate-limit `fn` to run at most once per `intervalMs`, leading edge plus a
+ * trailing call so the final invocation is never dropped. Used to tame the
+ * high-frequency MutationObserver callbacks on SPA host pages, where a single
+ * streamed response can fire thousands of mutations.
+ */
+export const throttle = <A extends unknown[]>(
+  fn: (...args: A) => void,
+  intervalMs: number,
+): Throttled<A> => {
+  let last = 0;
+  let timer: ReturnType<typeof setTimeout> | null = null;
+  let pending: A | null = null;
+
+  const run = (args: A): void => {
+    last = Date.now();
+    fn(...args);
+  };
+
+  const throttled = ((...args: A): void => {
+    const remaining = intervalMs - (Date.now() - last);
+
+    if (remaining <= 0) {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+      run(args);
+      return;
+    }
+
+    pending = args;
+    if (!timer) {
+      timer = setTimeout(() => {
+        timer = null;
+        if (pending) {
+          const args = pending;
+          pending = null;
+          run(args);
+        }
+      }, remaining);
+    }
+  }) as Throttled<A>;
+
+  throttled.cancel = (): void => {
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+    pending = null;
+  };
+
+  return throttled;
+};
