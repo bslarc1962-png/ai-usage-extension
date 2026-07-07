@@ -15,7 +15,7 @@
 | # | 類別 | 嚴重度 | 標題 |
 | --- | --- | --- | --- |
 | 1 | 文檔一致性 | ✅ 已修正 | 工具列徽章尚未實作 |
-| 2 | 效能 | 🟠 中 | 頁面浮層使用兩個全頁 MutationObserver 且未節流 |
+| 2 | 效能 | ✅ 已修正 | 頁面浮層使用兩個全頁 MutationObserver 且未節流 |
 | 3 | 文檔一致性 | 🟡 低 | 頁面浮層並非真正的 Shadow DOM |
 | 4 | 隱私 / 儲存 | 🟡 低 | 完整 `raw` API 回應被寫入 storage |
 | 5 | 相依套件 | 🟡 低 | `react-shadow` 為未使用的相依套件 |
@@ -45,26 +45,30 @@ badge）一眼顯示目前最高用量」列為功能，但程式庫中**沒有�
 
 ## 2. 頁面浮層使用兩個全頁 MutationObserver 且未節流
 
-**嚴重度：🟠 中（效能）**
+**嚴重度：✅ 已於本 PR 修正**
 
-`src/content/index.tsx` 在 claude.ai / chatgpt.com 上註冊了兩個 `MutationObserver`，
+原本 `src/content/index.tsx` 在 claude.ai / chatgpt.com 上註冊了兩個 `MutationObserver`，
 且都以 `document.documentElement` 搭配 `{ childList: true, subtree: true }` 觀察**整頁**：
 
-1. `UsageOverlay` 內的 `checkElement`（約 L94–110）：每次 DOM 變動都執行一次
+1. `UsageOverlay` 內的 `checkElement`：每次 DOM 變動都執行一次
    `document.querySelector(inputSelector)`。
-2. `mount` 內的 `watcher`（約 L303–311）：每次 DOM 變動都檢查 `hostRef.isConnected`。
+2. `mount` 內的 `watcher`：每次 DOM 變動都檢查 `hostRef.isConnected`。
 
-這兩個網站都是變動頻繁的重量級 SPA，因此上述回呼會被**極高頻**觸發，每次還可能
-帶一次跨整個 DOM 的 `querySelector`。在長對話或串流輸出時，可能造成明顯的主執行緒
-負擔。
+這兩個網站是變動頻繁的重量級 SPA，單一串流回應就可能觸發**數千次** DOM 變動，
+使上述回呼被極高頻呼叫，造成明顯的主執行緒負擔。
 
-**建議**：
+**修正**：新增 `throttle`（`src/shared/utils/index.ts`，leading + trailing、上限一次
+／`intervalMs`，並提供 `cancel()` 供卸載時清除待觸發的呼叫），並套用到兩個 observer
+的回呼（間隔 250ms）：
 
-- 對回呼加上節流／防抖（例如 `requestAnimationFrame` 合併，或 100–250ms 的 debounce），
-  多次連續變動只重新計算一次。
-- 可考慮縮小觀察範圍（例如只觀察已知的聊天容器，而非整個 `documentElement`），
-  或降低對 `subtree` 的依賴。
-- 兩個觀察器目的相近（確認輸入框存在／宿主節點仍在），可評估合併為單一節流回呼。
+- `checkElement` 改為 `throttle(checkElement, 250)`，並在 effect cleanup 呼叫 `cancel()`。
+- `watcher` 回呼改為 `throttle(reattachIfDetached, 250)`。
+
+如此在串流風暴下，回呼從「每次 mutation（可能上千次／秒）」降為**最多每 250ms 一次**
+（約 4 次／秒），同時保留 trailing 呼叫以免漏掉最後一次狀態變化。
+
+**未一併處理（可日後再優化）**：縮小觀察範圍（只觀察聊天容器而非整個
+`documentElement`）、或將兩個 observer 合併為單一回呼——屬更進一步的最佳化，非必要。
 
 ---
 

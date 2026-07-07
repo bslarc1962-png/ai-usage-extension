@@ -8,7 +8,7 @@ import { useNow } from '../shared/hooks/useNow';
 import { msg } from '../shared/i18n';
 import { requestUsageRefresh } from '../shared/messaging';
 import type { ClaudeUsage, CodexUsage, UsageLimit, UsageState } from '../shared/types';
-import { formatRelativeTime, formatReset, getUsageTone } from '../shared/utils';
+import { formatRelativeTime, formatReset, getUsageTone, throttle } from '../shared/utils';
 
 const HOST_ID = 'ai-usage-claude-overlay-host';
 
@@ -98,7 +98,10 @@ const UsageOverlay: React.FC = () => {
 
     checkElement();
 
-    const observer = new MutationObserver(checkElement);
+    // claude.ai / chatgpt.com stream thousands of DOM mutations per response;
+    // throttle so we re-query for the chat input at most a few times a second.
+    const throttledCheck = throttle(checkElement, 250);
+    const observer = new MutationObserver(throttledCheck);
     observer.observe(document.documentElement, {
       childList: true,
       subtree: true,
@@ -106,6 +109,7 @@ const UsageOverlay: React.FC = () => {
 
     return () => {
       observer.disconnect();
+      throttledCheck.cancel();
     };
   }, []);
 
@@ -300,11 +304,15 @@ const attachHost = (): void => {
 const mount = (): void => {
   attachHost();
 
-  const watcher = new MutationObserver(() => {
+  // Re-attach the overlay host if the SPA tears it out of the DOM. Throttled
+  // for the same reason as the input check above — the watcher lives for the
+  // page's lifetime, so it must not run on every mutation.
+  const reattachIfDetached = throttle(() => {
     if (!hostRef || !hostRef.isConnected) {
       attachHost();
     }
-  });
+  }, 250);
+  const watcher = new MutationObserver(reattachIfDetached);
   watcher.observe(document.documentElement, {
     childList: true,
     subtree: true,
