@@ -42,8 +42,7 @@
 	},
 	"dependencies": {
 		"react": "^19.2.4",
-		"react-dom": "^19.2.4",
-		"react-shadow": "^20.6.0"
+		"react-dom": "^19.2.4"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.39.2",

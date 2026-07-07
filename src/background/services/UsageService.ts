@@ -61,7 +61,6 @@ const buildClaudeUsage = (raw: Json | null): ClaudeUsage | null => {
       session: claudeWindowFrom(raw.five_hour),
       weekly: claudeWindowFrom(raw.seven_day),
     }),
-    raw,
   };
 };
 
@@ -112,7 +111,6 @@ const buildCodexUsage = (raw: Json | null): CodexUsage | null => {
       session: codexWindowFrom(rate?.primary_window),
       weekly: codexWindowFrom(rate?.secondary_window),
     }),
-    raw,
   };
 };
 
