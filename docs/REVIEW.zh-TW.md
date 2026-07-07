@@ -17,8 +17,8 @@
 | 1 | 文檔一致性 | ✅ 已修正 | 工具列徽章尚未實作 |
 | 2 | 效能 | ✅ 已修正 | 頁面浮層使用兩個全頁 MutationObserver 且未節流 |
 | 3 | 文檔一致性 | 🟡 低 | 頁面浮層並非真正的 Shadow DOM |
-| 4 | 隱私 / 儲存 | 🟡 低 | 完整 `raw` API 回應被寫入 storage |
-| 5 | 相依套件 | 🟡 低 | `react-shadow` 為未使用的相依套件 |
+| 4 | 隱私 / 儲存 | ✅ 已修正 | 完整 `raw` API 回應被寫入 storage |
+| 5 | 相依套件 | ✅ 已修正 | `react-shadow` 為未使用的相依套件 |
 | 6 | 建置 / CI | ✅ 已修正 | `pnpm test` 指令在新版 Node 下無法掃描目錄 |
 | 7 | 安全性 | 🟢 良好 | 存取權杖與 cookie 的處理方式 |
 
@@ -81,7 +81,7 @@ README 與商店文案宣稱浮層「以 Shadow DOM 呈現，避免與宿主頁�
 再用 `createRoot(host)` 直接把 React 渲染進去；樣式則透過 `manifest.json` 的
 `content_scripts.css`（`overlay.css`）**注入到整個頁面**。
 
-`package.json` 雖然列有 `react-shadow`，但 `src/` 內並未匯入使用（見發現 #5）。
+（`react-shadow` 這個未使用的相依已於本 PR 移除，見發現 #5。）
 
 **影響**：實際的樣式隔離只靠 `aiu-` 類別前綴這個命名慣例。宿主頁面若有攻擊性的
 全域樣式（如 `* { ... }`、標籤選擇器、`!important` 重設）仍可能影響浮層外觀；反之
@@ -90,7 +90,7 @@ README 與商店文案宣稱浮層「以 Shadow DOM 呈現，避免與宿主頁�
 
 **建議**：
 
-- 若要符合文檔敘述，改用 `react-shadow`（已在相依中）或原生 `attachShadow` 將浮層
+- 若要符合文檔敘述，改用原生 `Element.attachShadow`（或重新引入 `react-shadow`）將浮層
   包進 Shadow Root，並把樣式改為注入 shadow root 內。
 - 若維持現狀，請更新 README／商店文案，改描述為「以 Shadow DOM 隔離」→「以命名空間化
   的樣式隔離」，以免與實作不符。
@@ -99,33 +99,33 @@ README 與商店文案宣稱浮層「以 Shadow DOM 呈現，避免與宿主頁�
 
 ## 4. 完整 `raw` API 回應被寫入 storage
 
-**嚴重度：🟡 低（隱私 / 儲存）**
+**嚴重度：✅ 已於本 PR 修正**
 
-`src/background/services/UsageService.ts` 的 `buildClaudeUsage` 與 `buildCodexUsage`
-會把**整包**原始 API 回應存進 `raw` 欄位（`ClaudeUsage.raw` / `CodexUsage.raw`，見
-`src/shared/types/index.ts`），最終隨 `UsageState` 寫入 `chrome.storage.local`。
+原本 `src/background/services/UsageService.ts` 的 `buildClaudeUsage` 與 `buildCodexUsage`
+會把**整包**原始 API 回應存進 `raw` 欄位，最終隨 `UsageState` 寫入
+`chrome.storage.local`；但 UI 從未使用 `raw`（浮層與卡片只讀 `session` /
+`weekly` / `lastUpdated`），形成不必要的靜態資料落地。
 
-觀察：
+**修正**：
 
-- UI 並未使用 `raw`（浮層與卡片只讀 `session` / `weekly` / `lastUpdated`）。
-- 這些回應可能包含超出所需的欄位（組織資訊、方案細節等），形成不必要的靜態資料落地。
-- 好消息是：Codex 的**存取權杖不在** `raw` 中——`raw` 存的是 usage 端點回應，而非
-  session 端點回應（見發現 #7）。
+- 從 `buildClaudeUsage` / `buildCodexUsage` 的回傳物件移除 `raw`（抓取解析後即捨棄）。
+- 從 `src/shared/types/index.ts` 的 `ClaudeUsage` / `CodexUsage` 介面移除 `raw?` 欄位。
 
-**建議**：既然 UI 用不到，抓取後即可捨棄 `raw`（不要存入 storage），或只保留少數
-需要的欄位。這能同時降低儲存量與資料落地面。
+如此寫入 storage 的快照只保留 UI 實際需要的欄位，降低儲存量與資料落地面。
+（Codex 存取權杖本就不在 `raw`、也不在 storage，見發現 #7。）
 
 ---
 
 ## 5. `react-shadow` 為未使用的相依套件
 
-**嚴重度：🟡 低（相依套件衛生）**
+**嚴重度：✅ 於本 PR 修正**
 
-`package.json` 的 `dependencies` 列有 `react-shadow`，但 `src/` 內找不到任何匯入
+原本 `package.json` 的 `dependencies` 列有 `react-shadow`，但 `src/` 內找不到任何匯入
 （僅出現在 `package.json` 與 `pnpm-lock.yaml`）。
 
-**建議**：若不打算依發現 #3 導入 Shadow DOM，請移除此相依以縮減安裝體積與供應鏈面；
-若打算導入，則正好可用它來落實真正的 Shadow DOM。
+**修正**：以 `pnpm remove react-shadow` 移除此未使用相依，並同步更新 `pnpm-lock.yaml`，
+縮減安裝體積與供應鏈面。日後若要導入真正的 Shadow DOM（見發現 #3），可改用原生
+`Element.attachShadow` 或重新引入所需套件。
 
 ---
 
