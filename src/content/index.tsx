@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import claudeBrandAsset from '../assets/brands/claude-anthropic.jpg?inline';
 import codexBrandAsset from '../assets/brands/codex-openai.jpg?inline';
 import limitBrandAsset from '../../public/icons/limit-icon-2.0.png?inline';
+import overlayCss from './styles/overlay.css?inline';
 import { STORAGE_KEYS } from '../shared/constants';
 import { useNow } from '../shared/hooks/useNow';
 import { msg } from '../shared/i18n';
@@ -268,6 +269,28 @@ const UsageOverlay: React.FC = () => {
 let hostRef: HTMLDivElement | null = null;
 let rootRef: ReturnType<typeof createRoot> | null = null;
 
+/**
+ * Build the overlay host with a Shadow DOM so the host page's CSS can't reach
+ * in and overlay.css can't leak out. The stylesheet is injected as a <style>
+ * inside the shadow root; React renders into a separate mount node so the root
+ * never clears the style element.
+ */
+const buildHost = (): { host: HTMLDivElement; mount: HTMLDivElement } => {
+  const host = document.createElement('div');
+  host.id = HOST_ID;
+
+  const shadow = host.attachShadow({ mode: 'open' });
+
+  const style = document.createElement('style');
+  style.textContent = overlayCss;
+  shadow.appendChild(style);
+
+  const mount = document.createElement('div');
+  shadow.appendChild(mount);
+
+  return { host, mount };
+};
+
 const attachHost = (): void => {
   const target = document.documentElement;
   if (!target) {
@@ -279,25 +302,20 @@ const attachHost = (): void => {
     return;
   }
 
-  const existing = document.getElementById(HOST_ID) as HTMLDivElement | null;
-  if (existing) {
-    hostRef = existing;
-    if (!rootRef) {
-      rootRef = createRoot(existing);
-      rootRef.render(<UsageOverlay />);
-    }
-    return;
+  // Drop any stale host left by a previous injection so we never duplicate it.
+  const existing = document.getElementById(HOST_ID);
+  if (existing && existing !== hostRef) {
+    existing.remove();
   }
 
-  const host = document.createElement('div');
-  host.id = HOST_ID;
+  const { host, mount } = buildHost();
   target.appendChild(host);
   hostRef = host;
 
   if (rootRef) {
     rootRef.unmount();
   }
-  rootRef = createRoot(host);
+  rootRef = createRoot(mount);
   rootRef.render(<UsageOverlay />);
 };
 
