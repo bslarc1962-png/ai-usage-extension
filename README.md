@@ -1,6 +1,6 @@
 # AI Usage Tracker（AI 用量追蹤器）
 
-[![CI](https://github.com/cupcakedev/ai-usage-extension/actions/workflows/ci.yml/badge.svg)](https://github.com/cupcakedev/ai-usage-extension/actions/workflows/ci.yml)
+[![CI](https://github.com/bslarc1962-png/ai-usage-extension/actions/workflows/ci.yml/badge.svg)](https://github.com/bslarc1962-png/ai-usage-extension/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 **語言：** **繁體中文** · [繁體中文 (詳細版)](./README.zh-TW.md)

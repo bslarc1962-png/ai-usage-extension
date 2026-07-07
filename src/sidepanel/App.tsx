@@ -100,7 +100,7 @@ export const App = () => {
       <footer className="au-footer">
         <a
           className="au-footer__link"
-          href="https://github.com/cupcakedev/ai-usage-extension"
+          href="https://github.com/bslarc1962-png/ai-usage-extension"
           target="_blank"
           rel="noreferrer"
         >

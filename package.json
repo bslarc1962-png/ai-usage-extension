@@ -7,12 +7,12 @@
 	"author": "InspectorCat",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/cupcakedev/ai-usage-extension.git"
+		"url": "git+https://github.com/bslarc1962-png/ai-usage-extension.git"
 	},
 	"bugs": {
-		"url": "https://github.com/cupcakedev/ai-usage-extension/issues"
+		"url": "https://github.com/bslarc1962-png/ai-usage-extension/issues"
 	},
-	"homepage": "https://github.com/cupcakedev/ai-usage-extension#readme",
+	"homepage": "https://github.com/bslarc1962-png/ai-usage-extension#readme",
 	"keywords": [
 		"chrome-extension",
 		"mv3",
