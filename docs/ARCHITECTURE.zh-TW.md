@@ -225,6 +225,7 @@ UI 端一律透過 `src/shared/messaging.ts` 的 `requestUsageRefresh()` 送訊�
 - **Cookie 優先解析組織 ID**：先讀 `lastActiveOrg` cookie，多數情況可省下一次
   `/api/organizations` 請求。
 - **保留舊值**：暫時性抓取失敗不會清空既有快照。
-- **樣式隔離的現況**：浮層以 `aiu-` 前綴的類別搭配透過 manifest 注入的 CSS 做隔離。
-  README 描述為 Shadow DOM，但目前的實作並未真正使用 Shadow DOM（詳見
-  [檢查報告](./REVIEW.zh-TW.md#3-頁面浮層並非真正的-shadow-dom)）。
+- **樣式隔離**：浮層以原生 `attachShadow` 掛在 Shadow Root 內，`overlay.css` 以字串注入
+  shadow 內部的 `<style>`，因此宿主頁面 CSS 進不來、浮層 CSS 也不外溢（見
+  [檢查報告 #3](./REVIEW.zh-TW.md#3-頁面浮層並非真正的-shadow-dom)）。`aiu-` 類別前綴與
+  `all: initial` 保留作為額外保險。

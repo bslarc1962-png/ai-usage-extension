@@ -16,7 +16,7 @@
 | --- | --- | --- | --- |
 | 1 | 文檔一致性 | ✅ 已修正 | 工具列徽章尚未實作 |
 | 2 | 效能 | ✅ 已修正 | 頁面浮層使用兩個全頁 MutationObserver 且未節流 |
-| 3 | 文檔一致性 | 🟡 低 | 頁面浮層並非真正的 Shadow DOM |
+| 3 | 文檔一致性 | ✅ 已修正 | 頁面浮層並非真正的 Shadow DOM |
 | 4 | 隱私 / 儲存 | ✅ 已修正 | 完整 `raw` API 回應被寫入 storage |
 | 5 | 相依套件 | ✅ 已修正 | `react-shadow` 為未使用的相依套件 |
 | 6 | 建置 / CI | ✅ 已修正 | `pnpm test` 指令在新版 Node 下無法掃描目錄 |
@@ -74,26 +74,23 @@ badge）一眼顯示目前最高用量」列為功能，但程式庫中**沒有�
 
 ## 3. 頁面浮層並非真正的 Shadow DOM
 
-**嚴重度：🟡 低（文檔一致性 / 樣式隔離）**
+**嚴重度：✅ 於本 PR 修正**
 
-README 與商店文案宣稱浮層「以 Shadow DOM 呈現，避免與宿主頁面樣式衝突」。實際上
-`src/content/index.tsx` 是把一個一般的 `<div>`（`HOST_ID`）附加到 `document.documentElement`，
-再用 `createRoot(host)` 直接把 React 渲染進去；樣式則透過 `manifest.json` 的
-`content_scripts.css`（`overlay.css`）**注入到整個頁面**。
+原本 README 與商店文案宣稱浮層「以 Shadow DOM 呈現，避免與宿主頁面樣式衝突」，
+但實作只是把一般 `<div>` 附加到 `document.documentElement`、以 `createRoot(host)` 渲染，
+樣式則透過 `manifest.json` 的 `content_scripts.css`（`overlay.css`）**注入整個頁面**；
+實際隔離僅靠 `aiu-` 前綴的命名慣例，宿主頁面攻擊性的全域樣式仍可能影響浮層。
 
-（`react-shadow` 這個未使用的相依已於本 PR 移除，見發現 #5。）
+**修正**：`src/content/index.tsx` 改用原生 **`host.attachShadow({ mode: 'open' })`**：
 
-**影響**：實際的樣式隔離只靠 `aiu-` 類別前綴這個命名慣例。宿主頁面若有攻擊性的
-全域樣式（如 `* { ... }`、標籤選擇器、`!important` 重設）仍可能影響浮層外觀；反之
-`overlay.css` 也可能因選擇器不夠嚴謹而外溢到宿主頁面。這是穩健性/一致性問題，並非
-安全漏洞。
+- 以 `?inline` 匯入 `overlay.css` 字串，塞進 shadow root 內的 `<style>`；React 渲染到
+  shadow 內的獨立掛載節點（與 `<style>` 分離，避免 root render 清掉樣式）。
+- 從 `manifest.json` 的 `content_scripts` 移除全域 `overlay.css` 注入（改由 shadow 內部負責）。
+- 結果：瀏覽器強制的 shadow 邊界使宿主頁面 CSS 進不來、浮層 CSS 也不外溢，達成文檔宣稱的
+  真正樣式隔離。視覺與行為不變。
 
-**建議**：
-
-- 若要符合文檔敘述，改用原生 `Element.attachShadow`（或重新引入 `react-shadow`）將浮層
-  包進 Shadow Root，並把樣式改為注入 shadow root 內。
-- 若維持現狀，請更新 README／商店文案，改描述為「以 Shadow DOM 隔離」→「以命名空間化
-  的樣式隔離」，以免與實作不符。
+> 附註：`src/content/styles/overlay.css` 內既有的 `all: initial` 仍保留——inheritable
+> 屬性（font/color）會穿透 shadow 邊界，這行可一併擋掉宿主頁面繼承來的字型與顏色。
 
 ---
 

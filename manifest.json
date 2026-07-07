@@ -32,9 +32,6 @@
       "js": [
         "src/content/index.tsx"
       ],
-      "css": [
-        "src/content/styles/overlay.css"
-      ],
       "run_at": "document_idle"
     }
   ],
