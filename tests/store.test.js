@@ -46,7 +46,7 @@ const expectedPermissionHeadings = [
 const CHROME_SHORT_DESCRIPTION_MAX = 132;
 const SEO_FULL_DESCRIPTION_MIN = 600;
 const PERMISSION_RATIONALE_MIN = 60;
-const localizedStoreLocales = ['en', 'es', 'fr', 'de', 'it', 'pt_BR', 'ru', 'ja', 'zh_CN', 'hi'];
+const localizedStoreLocales = ['en', 'es', 'fr', 'de', 'it', 'pt_BR', 'ru', 'ja', 'zh_CN', 'zh_TW', 'hi'];
 const requiredListingHeadings = [
   'Name',
   'Short Description',

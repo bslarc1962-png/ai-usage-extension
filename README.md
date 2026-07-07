@@ -3,6 +3,10 @@
 [![CI](https://github.com/cupcakedev/ai-usage-extension/actions/workflows/ci.yml/badge.svg)](https://github.com/cupcakedev/ai-usage-extension/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
+**Languages:** **English** · [繁體中文](./README.zh-TW.md)
+
+Docs: [Architecture (繁體中文)](./docs/ARCHITECTURE.zh-TW.md) · [Security & Performance review (繁體中文)](./docs/REVIEW.zh-TW.md)
+
 A Chrome extension (Manifest V3) that tracks your **Claude** and **Codex** usage
 limits — both the 5-hour session window and the 7-day weekly window — and surfaces
 them in a popup, an on-page overlay, and the toolbar badge.
