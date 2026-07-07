@@ -16,6 +16,7 @@
 - [外部 API 端點](#外部-api-端點)
 - [在地化（i18n）](#在地化i18n)
 - [建置與發佈](#建置與發佈)
+- [測試](#測試)
 - [設計取捨](#設計取捨)
 
 ## 總覽
@@ -215,7 +216,16 @@ UI 端一律透過 `src/shared/messaging.ts` 的 `requestUsageRefresh()` 送訊�
 - **型別檢查**：`tsc --noEmit`（`pnpm build` 會先跑）。
 - **發佈**：`pnpm release` = 測試 → 建置 → 用 `scripts/release.js` 封裝 `dist/` 成 zip。
 - **版本**：`pnpm bump` 同步遞增 `package.json` 與 `manifest.json` 的 patch 版本。
-- **CI**：`.github/workflows/ci.yml`；發佈由 `.github/workflows/release.yml` 處理。
+- **CI**：`.github/workflows/ci.yml`（在 push main 與 pull request 時觸發
+  `lint → format:check → test → build`）；發佈由 `.github/workflows/release.yml` 處理。
+
+## 測試
+
+專案採兩層測試：**發佈前守門**（`node --test`，`tests/*.test.js`，檢查商店中繼資料一致性）
+與**單元測試**（Vitest，`tests/unit/*.test.ts`，驗證 `src/` 純函式行為，如
+`getUsageTone`、`formatReset`、`throttle`、`maxPercentage`／`updateBadge`）。
+`pnpm test` 會兩層都跑。完整說明、涵蓋範圍與新增測試的步驟見
+[docs/TESTING.zh-TW.md](./TESTING.zh-TW.md)。
 
 ## 設計取捨
 
