@@ -163,6 +163,7 @@ pnpm build
 
 請勿為疑似漏洞開立公開 issue，改依 [SECURITY.md](./SECURITY.md) 的流程回報。
 
-## 授權
+## 授權與致謝
 
-MIT
+本專案採用 [MIT License](./LICENSE) 授權。
+特別感謝原作者 [cupcakedev](https://github.com/cupcakedev/ai-usage-extension) 的核心專案，本專案在此基礎上進行了繁體中文化與 Windows 免安裝體驗的擴充與維護。
