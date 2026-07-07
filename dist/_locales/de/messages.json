@@ -1,0 +1,107 @@
+{
+  "appName": {
+    "message": "AI Usage Tracker: Claude- & Codex-Limits"
+  },
+  "appShortName": {
+    "message": "AI Usage Tracker"
+  },
+  "appDescription": {
+    "message": "Verfolge Claude- und ChatGPT-(Codex)-Limits pro Sitzung und Woche in Popup, Badge und Overlay. Privat, ohne Einrichtung."
+  },
+  "popupEyebrow": {
+    "message": "KI-Kapazität"
+  },
+  "popupTitle": {
+    "message": "Nutzung"
+  },
+  "refreshUsage": {
+    "message": "Nutzung aktualisieren"
+  },
+  "refreshUsageLimits": {
+    "message": "Limits aktualisieren"
+  },
+  "refreshErrorPrefix": {
+    "message": "Aktualisierung fehlgeschlagen"
+  },
+  "refreshFailed": {
+    "message": "Aktualisierung fehlgeschlagen"
+  },
+  "overlayToggleLabel": {
+    "message": "Overlays auf der Seite"
+  },
+  "loadingSnapshot": {
+    "message": "Daten werden geladen"
+  },
+  "notConnected": {
+    "message": "nicht verbunden"
+  },
+  "updated": {
+    "message": "aktualisiert $1"
+  },
+  "refreshing": {
+    "message": "aktualisiere..."
+  },
+  "waitingForSnapshot": {
+    "message": "warte auf Daten"
+  },
+  "sessionLimit": {
+    "message": "Sitzung · 5 h"
+  },
+  "weeklyLimit": {
+    "message": "Woche · 7 T"
+  },
+  "planLabel": {
+    "message": "Plan · $1"
+  },
+  "resetsLabel": {
+    "message": "Reset $1"
+  },
+  "nextResetLabel": {
+    "message": "Reset $1"
+  },
+  "showLimits": {
+    "message": "Limits anzeigen"
+  },
+  "hideLimits": {
+    "message": "Limits ausblenden"
+  },
+  "limitsTab": {
+    "message": "LIMITS"
+  },
+  "emptyClaude": {
+    "message": "Noch keine Daten. Öffne claude.ai angemeldet und aktualisiere."
+  },
+  "emptyCodex": {
+    "message": "Noch keine Daten. Öffne chatgpt.com angemeldet und aktualisiere."
+  },
+  "emptyOverlay": {
+    "message": "Noch keine Daten. Öffne das Popup und aktualisiere."
+  },
+  "sourceCode": {
+    "message": "Quellcode"
+  },
+  "github": {
+    "message": "GitHub"
+  },
+  "timeUnknown": {
+    "message": "unbekannt"
+  },
+  "timeNow": {
+    "message": "jetzt"
+  },
+  "timeJustNow": {
+    "message": "gerade eben"
+  },
+  "timeAgo": {
+    "message": "vor $1"
+  },
+  "timeDayShort": {
+    "message": "T"
+  },
+  "timeHourShort": {
+    "message": "h"
+  },
+  "timeMinuteShort": {
+    "message": "min"
+  }
+}

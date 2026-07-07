@@ -1,0 +1,107 @@
+{
+  "appName": {
+    "message": "AI Usage Tracker: лимиты Claude и Codex"
+  },
+  "appShortName": {
+    "message": "AI Usage Tracker"
+  },
+  "appDescription": {
+    "message": "Отслеживайте лимиты Claude и ChatGPT (Codex) за сессию и неделю в попапе, бейдже и оверлее. Приватно, без настройки."
+  },
+  "popupEyebrow": {
+    "message": "AI-лимиты"
+  },
+  "popupTitle": {
+    "message": "Использование"
+  },
+  "refreshUsage": {
+    "message": "Обновить данные"
+  },
+  "refreshUsageLimits": {
+    "message": "Обновить лимиты"
+  },
+  "refreshErrorPrefix": {
+    "message": "Не удалось обновить"
+  },
+  "refreshFailed": {
+    "message": "Ошибка обновления"
+  },
+  "overlayToggleLabel": {
+    "message": "Оверлеи на страницах"
+  },
+  "loadingSnapshot": {
+    "message": "загрузка данных"
+  },
+  "notConnected": {
+    "message": "нет подключения"
+  },
+  "updated": {
+    "message": "обновлено $1"
+  },
+  "refreshing": {
+    "message": "обновление..."
+  },
+  "waitingForSnapshot": {
+    "message": "ожидание данных"
+  },
+  "sessionLimit": {
+    "message": "Сессия · 5 ч"
+  },
+  "weeklyLimit": {
+    "message": "Неделя · 7 д"
+  },
+  "planLabel": {
+    "message": "План · $1"
+  },
+  "resetsLabel": {
+    "message": "сброс $1"
+  },
+  "nextResetLabel": {
+    "message": "сброс $1"
+  },
+  "showLimits": {
+    "message": "Показать лимиты"
+  },
+  "hideLimits": {
+    "message": "Скрыть лимиты"
+  },
+  "limitsTab": {
+    "message": "ЛИМИТЫ"
+  },
+  "emptyClaude": {
+    "message": "Данных пока нет. Откройте claude.ai под своим аккаунтом и обновите."
+  },
+  "emptyCodex": {
+    "message": "Данных пока нет. Откройте chatgpt.com под своим аккаунтом и обновите."
+  },
+  "emptyOverlay": {
+    "message": "Данных пока нет. Откройте попап и обновите."
+  },
+  "sourceCode": {
+    "message": "Исходный код"
+  },
+  "github": {
+    "message": "GitHub"
+  },
+  "timeUnknown": {
+    "message": "неизвестно"
+  },
+  "timeNow": {
+    "message": "сейчас"
+  },
+  "timeJustNow": {
+    "message": "только что"
+  },
+  "timeAgo": {
+    "message": "$1 назад"
+  },
+  "timeDayShort": {
+    "message": "д"
+  },
+  "timeHourShort": {
+    "message": "ч"
+  },
+  "timeMinuteShort": {
+    "message": "м"
+  }
+}

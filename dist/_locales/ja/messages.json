@@ -1,0 +1,107 @@
+{
+  "appName": {
+    "message": "AI Usage Tracker: Claude と Codex の上限"
+  },
+  "appShortName": {
+    "message": "AI Usage Tracker"
+  },
+  "appDescription": {
+    "message": "Claude と ChatGPT (Codex) のセッション・週間上限をポップアップ、バッジ、オーバーレイで確認。プライバシー重視、設定不要。"
+  },
+  "popupEyebrow": {
+    "message": "AI 容量"
+  },
+  "popupTitle": {
+    "message": "使用状況"
+  },
+  "refreshUsage": {
+    "message": "使用状況を更新"
+  },
+  "refreshUsageLimits": {
+    "message": "使用上限を更新"
+  },
+  "refreshErrorPrefix": {
+    "message": "更新できませんでした"
+  },
+  "refreshFailed": {
+    "message": "更新に失敗しました"
+  },
+  "overlayToggleLabel": {
+    "message": "ページ内オーバーレイ"
+  },
+  "loadingSnapshot": {
+    "message": "データを読み込み中"
+  },
+  "notConnected": {
+    "message": "未接続"
+  },
+  "updated": {
+    "message": "$1 に更新"
+  },
+  "refreshing": {
+    "message": "更新中..."
+  },
+  "waitingForSnapshot": {
+    "message": "データ待機中"
+  },
+  "sessionLimit": {
+    "message": "セッション · 5時間"
+  },
+  "weeklyLimit": {
+    "message": "週間 · 7日"
+  },
+  "planLabel": {
+    "message": "プラン · $1"
+  },
+  "resetsLabel": {
+    "message": "リセット $1"
+  },
+  "nextResetLabel": {
+    "message": "リセット $1"
+  },
+  "showLimits": {
+    "message": "上限を表示"
+  },
+  "hideLimits": {
+    "message": "上限を非表示"
+  },
+  "limitsTab": {
+    "message": "上限"
+  },
+  "emptyClaude": {
+    "message": "まだデータがありません。ログイン済みの claude.ai を開いて更新してください。"
+  },
+  "emptyCodex": {
+    "message": "まだデータがありません。ログイン済みの chatgpt.com を開いて更新してください。"
+  },
+  "emptyOverlay": {
+    "message": "まだデータがありません。ポップアップを開いて更新してください。"
+  },
+  "sourceCode": {
+    "message": "ソースコード"
+  },
+  "github": {
+    "message": "GitHub"
+  },
+  "timeUnknown": {
+    "message": "不明"
+  },
+  "timeNow": {
+    "message": "今"
+  },
+  "timeJustNow": {
+    "message": "たった今"
+  },
+  "timeAgo": {
+    "message": "$1前"
+  },
+  "timeDayShort": {
+    "message": "日"
+  },
+  "timeHourShort": {
+    "message": "時間"
+  },
+  "timeMinuteShort": {
+    "message": "分"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "appName": {
+    "message": "AI Usage Tracker：Claude 與 Codex 限額"
+  },
+  "appShortName": {
+    "message": "AI Usage Tracker"
+  },
+  "appDescription": {
+    "message": "在彈出視窗、圖示徽章與頁面浮層中追蹤 Claude 與 ChatGPT (Codex) 的工作階段和每週用量限額。注重隱私，免設定。"
+  },
+  "popupEyebrow": {
+    "message": "AI 容量"
+  },
+  "popupTitle": {
+    "message": "使用量"
+  },
+  "refreshUsage": {
+    "message": "重新整理用量"
+  },
+  "refreshUsageLimits": {
+    "message": "重新整理用量限額"
+  },
+  "refreshErrorPrefix": {
+    "message": "無法重新整理"
+  },
+  "refreshFailed": {
+    "message": "重新整理失敗"
+  },
+  "overlayToggleLabel": {
+    "message": "頁面浮層"
+  },
+  "loadingSnapshot": {
+    "message": "正在載入資料"
+  },
+  "notConnected": {
+    "message": "未連線"
+  },
+  "updated": {
+    "message": "更新於 $1"
+  },
+  "refreshing": {
+    "message": "重新整理中..."
+  },
+  "waitingForSnapshot": {
+    "message": "等待資料"
+  },
+  "sessionLimit": {
+    "message": "工作階段 · 5 小時"
+  },
+  "weeklyLimit": {
+    "message": "每週 · 7 天"
+  },
+  "planLabel": {
+    "message": "方案 · $1"
+  },
+  "resetsLabel": {
+    "message": "$1 後重置"
+  },
+  "nextResetLabel": {
+    "message": "$1 後重置"
+  },
+  "showLimits": {
+    "message": "顯示限額"
+  },
+  "hideLimits": {
+    "message": "隱藏限額"
+  },
+  "limitsTab": {
+    "message": "限額"
+  },
+  "emptyClaude": {
+    "message": "尚無資料。請在登入狀態下開啟 claude.ai，然後重新整理。"
+  },
+  "emptyCodex": {
+    "message": "尚無資料。請在登入狀態下開啟 chatgpt.com，然後重新整理。"
+  },
+  "emptyOverlay": {
+    "message": "尚無資料。請開啟彈出視窗並重新整理。"
+  },
+  "sourceCode": {
+    "message": "原始碼"
+  },
+  "github": {
+    "message": "GitHub"
+  },
+  "timeUnknown": {
+    "message": "未知"
+  },
+  "timeNow": {
+    "message": "現在"
+  },
+  "timeJustNow": {
+    "message": "剛剛"
+  },
+  "timeAgo": {
+    "message": "$1前"
+  },
+  "timeDayShort": {
+    "message": "天"
+  },
+  "timeHourShort": {
+    "message": "小時"
+  },
+  "timeMinuteShort": {
+    "message": "分鐘"
+  }
+}

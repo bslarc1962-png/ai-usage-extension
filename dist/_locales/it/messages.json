@@ -1,0 +1,107 @@
+{
+  "appName": {
+    "message": "AI Usage Tracker: limiti Claude e Codex"
+  },
+  "appShortName": {
+    "message": "AI Usage Tracker"
+  },
+  "appDescription": {
+    "message": "Monitora i limiti di Claude e ChatGPT (Codex) per sessione e settimana in popup, badge e overlay. Privato, senza setup."
+  },
+  "popupEyebrow": {
+    "message": "Capacità IA"
+  },
+  "popupTitle": {
+    "message": "Utilizzo"
+  },
+  "refreshUsage": {
+    "message": "Aggiorna utilizzo"
+  },
+  "refreshUsageLimits": {
+    "message": "Aggiorna limiti"
+  },
+  "refreshErrorPrefix": {
+    "message": "Impossibile aggiornare"
+  },
+  "refreshFailed": {
+    "message": "Aggiornamento non riuscito"
+  },
+  "overlayToggleLabel": {
+    "message": "Overlay nella pagina"
+  },
+  "loadingSnapshot": {
+    "message": "caricamento dati"
+  },
+  "notConnected": {
+    "message": "non connesso"
+  },
+  "updated": {
+    "message": "aggiornato $1"
+  },
+  "refreshing": {
+    "message": "aggiornamento..."
+  },
+  "waitingForSnapshot": {
+    "message": "in attesa dei dati"
+  },
+  "sessionLimit": {
+    "message": "Sessione · 5 h"
+  },
+  "weeklyLimit": {
+    "message": "Settimana · 7 g"
+  },
+  "planLabel": {
+    "message": "Piano · $1"
+  },
+  "resetsLabel": {
+    "message": "reset $1"
+  },
+  "nextResetLabel": {
+    "message": "reset $1"
+  },
+  "showLimits": {
+    "message": "Mostra limiti"
+  },
+  "hideLimits": {
+    "message": "Nascondi limiti"
+  },
+  "limitsTab": {
+    "message": "LIMITI"
+  },
+  "emptyClaude": {
+    "message": "Ancora nessun dato. Apri claude.ai con accesso effettuato e aggiorna."
+  },
+  "emptyCodex": {
+    "message": "Ancora nessun dato. Apri chatgpt.com con accesso effettuato e aggiorna."
+  },
+  "emptyOverlay": {
+    "message": "Ancora nessun dato. Apri il popup e aggiorna."
+  },
+  "sourceCode": {
+    "message": "Codice sorgente"
+  },
+  "github": {
+    "message": "GitHub"
+  },
+  "timeUnknown": {
+    "message": "sconosciuto"
+  },
+  "timeNow": {
+    "message": "ora"
+  },
+  "timeJustNow": {
+    "message": "proprio ora"
+  },
+  "timeAgo": {
+    "message": "$1 fa"
+  },
+  "timeDayShort": {
+    "message": "g"
+  },
+  "timeHourShort": {
+    "message": "h"
+  },
+  "timeMinuteShort": {
+    "message": "min"
+  }
+}
