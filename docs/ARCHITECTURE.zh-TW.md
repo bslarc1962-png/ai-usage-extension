@@ -30,8 +30,8 @@
 
 1. **彈出視窗（sidepanel/popup）** — 點選工具列圖示後開啟的 React UI。
 2. **頁面浮層（content overlay）** — 直接注入 claude.ai / chatgpt.com 頁面的膠囊小工具。
-3. **工具列徽章（badge）** — 於 README 中列為功能，但目前尚未實作（詳見
-   [檢查報告](./REVIEW.zh-TW.md#1-工具列徽章尚未實作)）。
+3. **工具列徽章（badge）** — 擴充功能圖示上顯示目前最高用量百分比，由背景
+   service worker 每次刷新後更新（`src/background/badge.ts`）。
 
 核心設計原則：**擷取與呈現分離**。只有背景 service worker 會對外抓取資料；所有
 UI 介面都是無狀態的讀取端，透過 `chrome.storage.local` 取得同一份快照。
@@ -87,6 +87,7 @@ Chrome 擴充功能由數個彼此隔離、無法直接共享記憶體的執行�
 src/
   background/
     index.ts                 # service worker 進入點：alarm、訊息、生命週期
+    badge.ts                 # 依用量快照更新工具列圖示徽章
     services/
       UsageService.ts        # 抓取 + 解析 Claude / Codex API
   content/

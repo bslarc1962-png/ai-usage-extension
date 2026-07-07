@@ -14,7 +14,7 @@
 
 | # | 類別 | 嚴重度 | 標題 |
 | --- | --- | --- | --- |
-| 1 | 文檔一致性 | 🟠 中 | 工具列徽章尚未實作 |
+| 1 | 文檔一致性 | ✅ 已修正 | 工具列徽章尚未實作 |
 | 2 | 效能 | 🟠 中 | 頁面浮層使用兩個全頁 MutationObserver 且未節流 |
 | 3 | 文檔一致性 | 🟡 低 | 頁面浮層並非真正的 Shadow DOM |
 | 4 | 隱私 / 儲存 | 🟡 低 | 完整 `raw` API 回應被寫入 storage |
@@ -26,24 +26,20 @@
 
 ## 1. 工具列徽章尚未實作
 
-**嚴重度：🟠 中（文檔一致性）**
+**嚴重度：✅ 已於本 PR 修正**
 
-`README.md`、`README.zh-TW.md` 與各語言的商店文案都把「工具列徽章（toolbar badge）
-一眼顯示目前最高用量」列為功能，但整個程式庫中**沒有任何** `chrome.action.setBadgeText`
-或 `setBadgeBackgroundColor` 的呼叫，`manifest.json` 也未宣告 `action` 的預設徽章。
+原本 `README.md`、`README.zh-TW.md` 與各語言的商店文案都把「工具列徽章（toolbar
+badge）一眼顯示目前最高用量」列為功能，但程式庫中**沒有任何** `chrome.action.setBadgeText`
+呼叫，形成功能不實的宣稱。
 
-- `src/background/index.ts`：`refreshUsage()` 只更新 storage，未更新徽章。
-- `manifest.json`：`action` 僅設定 `default_popup` 與 `default_title`。
+**修正**：新增 `src/background/badge.ts`，並接進 `src/background/index.ts`：
 
-**影響**：對使用者與商店審查者形成功能不實的宣稱。
-
-**建議（擇一）**：
-
-- **實作**（推薦，因為已經對外宣傳）：在背景取得用量後，計算兩個 provider、
-  兩個視窗的最高百分比，呼叫 `chrome.action.setBadgeText({ text })` 與
-  `setBadgeBackgroundColor`（顏色可沿用 `USAGE_THRESHOLDS` 的 ok/warning/critical 分級）。
-  這是一段內聚且低風險的新增，可放進 `UsageService.refreshAllUsage` 之後。
-- 或**暫時修正文檔**：在功能未上線前，先從 README 與商店文案移除徽章相關描述。
+- 每次背景刷新用量後，計算 Claude／Codex × session／weekly 四個視窗的最高百分比，
+  以 `chrome.action.setBadgeText` 顯示於工具列圖示。
+- 底色沿用 `USAGE_THRESHOLDS` 的 ok／warning／critical 分級
+  （綠 `#16a34a`／琥珀 `#d97706`／紅 `#dc2626`）。
+- service worker 喚醒時會先從既有快照還原徽章，避免圖示在下次刷新前空白。
+- 尚無資料時清空徽章，避免殘留過期數字。
 
 ---
 
