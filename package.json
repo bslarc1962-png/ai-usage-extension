@@ -4,7 +4,7 @@
 	"description": "Chrome extension that tracks Claude and Codex usage limits (session and weekly).",
 	"private": true,
 	"license": "MIT",
-	"author": "cupcakedev",
+	"author": "InspectorCat",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/cupcakedev/ai-usage-extension.git"
