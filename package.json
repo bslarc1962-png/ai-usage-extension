@@ -32,7 +32,7 @@
 		"dev": "vite build --watch --mode development",
 		"bump": "node scripts/bump-version.js",
 		"typecheck": "tsc --noEmit",
-		"test": "node --test tests/",
+		"test": "node --test tests/*.test.js",
 		"build": "tsc --noEmit && vite build",
 		"release": "pnpm test && pnpm build && node scripts/release.js",
 		"lint": "eslint src",

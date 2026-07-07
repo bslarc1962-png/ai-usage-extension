@@ -19,7 +19,7 @@
 | 3 | 文檔一致性 | 🟡 低 | 頁面浮層並非真正的 Shadow DOM |
 | 4 | 隱私 / 儲存 | 🟡 低 | 完整 `raw` API 回應被寫入 storage |
 | 5 | 相依套件 | 🟡 低 | `react-shadow` 為未使用的相依套件 |
-| 6 | 建置 / CI | 🟡 低 | `pnpm test` 指令在新版 Node 下無法掃描目錄 |
+| 6 | 建置 / CI | ✅ 已修正 | `pnpm test` 指令在新版 Node 下無法掃描目錄 |
 | 7 | 安全性 | 🟢 良好 | 存取權杖與 cookie 的處理方式 |
 
 ---
@@ -131,22 +131,19 @@ README 與商店文案宣稱浮層「以 Shadow DOM 呈現，避免與宿主頁�
 
 ## 6. `pnpm test` 指令在新版 Node 下無法掃描目錄
 
-**嚴重度：🟡 低（建置 / CI）**
+**嚴重度：✅ 已於本 PR 修正**
 
-`package.json` 的 test script 為 `node --test tests/`。在本檢查環境（Node v22）下，
-此寫法會以 `Cannot find module '.../tests'` 失敗；改用 `node --test tests/store.test.js`
-（或 `node --test 'tests/**/*.test.js'`）則 36 項測試全數通過。
+原本 `package.json` 的 test script 為 `node --test tests/`。在 Node v22 下，此寫法會以
+`Cannot find module '.../tests'` 失敗；Node 20 則正常。
 
-**影響**：專案 README 標示需求為 Node 20，於該版本可正常運作；但若開發者或 CI 使用
-較新版 Node，`pnpm test` 與相依它的 `pnpm release` 可能失敗。
-
-**建議**：把 script 改為明確的檔案模式，例如：
+**修正**：已改為明確的檔案模式，跨 Node 版本皆可穩定運作：
 
 ```json
 "test": "node --test tests/*.test.js"
 ```
 
-以跨 Node 版本穩定運作。
+**附帶效益**：本 PR 也為 CI 加上 `pull_request` 觸發（`.github/workflows/ci.yml`），
+使 lint / format / test / build 在 PR 階段就會執行，而非只在合併進 `main` 之後。
 
 ---
 
